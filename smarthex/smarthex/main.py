@@ -1,3 +1,14 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+# SmartHex16 - A 16-character hexadecimal identifier system with checksum.
+#
+# Author: Victor Matos (@spacemany2k38, @vvrmatos)
+# Email: contact@byteram.co
+# Date: 2025-04-25
+# Title: Applied Mathematician
+#
+
 import secrets
 
 class SmartHexID(str):
