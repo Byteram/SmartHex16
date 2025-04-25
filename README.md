@@ -86,7 +86,7 @@ The system is implemented in Python 3.x, utilizing the `secrets` module for cryp
 ## Installation
 
 ```bash
-pip install smarthex
+pip install smarthex==0.2.2
 ```
 
 ## Usage
