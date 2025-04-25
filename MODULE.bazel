@@ -1,0 +1,26 @@
+###############################################################################
+# Bazel now uses Bzlmod by default to manage external dependencies.
+# Please consider migrating your external dependencies from WORKSPACE to MODULE.bazel.
+#
+# For more details, please check https://github.com/bazelbuild/bazel/issues/18958
+###############################################################################
+
+module(
+    name = "smarthex",
+    version = "0.1.0",
+)
+
+bazel_dep(name = "rules_python", version = "0.27.1")
+
+python = use_extension("@rules_python//python:extensions.bzl", "python")
+python.toolchain(
+    python_version = "3.7",
+)
+use_repo(python, "python3_7_toolchains")
+
+pip = use_extension("@rules_python//python:pip.bzl", "pip")
+pip.parse(
+    name = "pip_deps",
+    requirements_lock = "//:requirements.txt",
+)
+use_repo(pip, "pip_deps")
