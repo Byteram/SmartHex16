@@ -1,36 +1,28 @@
 import secrets
 
+class SmartHexID(str):
+    """Represents a validated 16-character hex identifier with checksum."""
+    def __new__(cls, value: str):
+        if len(value) != 16:
+            raise ValueError("SmartHexID must be 16 characters long")
+        return super().__new__(cls, value)
+
 class SmartHex:
-    def generate(self):
-        """Generate a 16-character hex identifier with checksum."""
+    def generate(self) -> SmartHexID:
+        """Returns a new SmartHex identifier with checksum."""
         raw_bytes = secrets.token_bytes(7)
         base_hex = raw_bytes.hex().upper()
-        return base_hex + self._compute_checksum(base_hex)
+        return SmartHexID(base_hex + self._compute_checksum(base_hex))
 
-    def validate(self, id_hex):
-        """Validate a 16-character hex identifier."""
+    def validate(self, id_hex: str) -> bool:
+        """Verifies if the given hex string is a valid SmartHex identifier."""
         if len(id_hex) != 16:
             return False
         base, check = id_hex[:14], id_hex[14:]
         return self._compute_checksum(base) == check.upper()
 
-    def _compute_checksum(self, base_hex):
-        """
-        Compute a robust checksum using polynomial weighting.
-        
-        The checksum is computed as:
-        Σ (digit_i * (i + 1)) mod 256
-        
-        This provides:
-        - Perfect detection of single-digit errors
-        - High detection rate of transpositions
-        - Uniform distribution of checksum values
-        """
-        # Convert hex string to list of integers
+    def _compute_checksum(self, base_hex: str) -> str:
+        """Computes a 2-character hex checksum using polynomial weighting."""
         digits = [int(c, 16) for c in base_hex]
-        
-        # Compute weighted sum using polynomial weights
         checksum = sum(d * (i + 1) for i, d in enumerate(digits))
-        
-        # Normalize to 8-bit value and convert to hex
         return f"{(checksum & 0xFF):02X}" 

@@ -19,4 +19,7 @@ classifiers = [
 
 [project.urls]
 "Homepage" = "https://github.com/yourusername/smarthex"
-"Bug Tracker" = "https://github.com/yourusername/smarthex/issues" 
+"Bug Tracker" = "https://github.com/yourusername/smarthex/issues"
+
+[project.scripts]
+smhex = "smarthex.cli:main" 

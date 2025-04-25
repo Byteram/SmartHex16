@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+from smarthex import SmartHex
+
+def main():
+    smart_hex = SmartHex()
+    print(smart_hex.generate())
+
+if __name__ == "__main__":
+    main() 
