@@ -99,6 +99,40 @@ identity = s.generate()  # Returns 16-character hex string
 is_valid = s.validate(identy)  # Returns boolean
 ```
 
+## Development with Bazel
+
+The project uses Bazel for building, testing, and running. Here are the main commands:
+
+### Building
+
+```bash
+# Build all targets
+bazel build //...
+
+# Build specific target
+bazel build //:smarthex
+```
+
+### Testing
+
+```bash
+# Run all tests
+bazel test //...
+
+# Run specific test
+bazel test //:smarthex_test
+```
+
+### Running
+
+```bash
+# Generate a new ID
+bazel run //:smhex -- --generate
+
+# Validate an ID
+bazel run //:smhex -- --validate FBA6C40FCF5FD611
+```
+
 ## License
 
 This project is licensed under the MIT License. See LICENSE for details. 
