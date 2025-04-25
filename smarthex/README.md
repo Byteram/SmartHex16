@@ -1,8 +1,8 @@
-# SmartHex: A Mathematical Analysis of Hexadecimal Identifier Generation
+# SmartHex16: A Mathematical Analysis of Hexadecimal Identifier Generation
 
 ## Abstract
 
-SmartHex is a deterministic hexadecimal identifier generation system implementing a 64-bit entropy space with integrated error detection capabilities. The system employs a 56-bit base identifier coupled with an 8-bit checksum, providing robust error detection while maintaining cryptographic-grade randomness in identifier generation.
+SmartHex16 is a deterministic hexadecimal identifier generation system implementing a 64-bit entropy space with integrated error detection capabilities. The system employs a 56-bit base identifier coupled with an 8-bit checksum, providing robust error detection while maintaining cryptographic-grade randomness in identifier generation.
 
 ## Mathematical Foundations
 
