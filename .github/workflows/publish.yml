@@ -1,29 +1,30 @@
-name: Upload Python Package
+name: Release and Publish
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*'
 
 permissions:
-  contents: read
+  contents: write
+  id-token: write
 
 jobs:
-  build-and-publish:
+  release:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-
     environment:
       name: pypi
       url: https://byteram.co/opensource/smarthex16
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.7"
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
@@ -36,4 +37,50 @@ jobs:
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          packages-dir: dist/ 
+          packages-dir: dist/
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ${{ github.ref_name }}
+          body: |
+            ## Changes in this release
+            
+            ### Features
+            - Added Bazel build system support
+            - Improved CLI interface
+            - Enhanced error handling
+            
+            ### Bug Fixes
+            - Fixed import issues in CLI module
+            - Corrected version handling in build process
+            
+            ### Documentation
+            - Added Bazel usage documentation
+            - Updated installation instructions
+            
+            ## Installation
+            
+            ```bash
+            pip install smarthex==${{ github.ref_name }}
+            ```
+            
+            ## Bazel Usage
+            
+            ```bash
+            # Build
+            bazel build //...
+            
+            # Test
+            bazel test //...
+            
+            # Run
+            bazel run //:smhex -- --generate
+            ```
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: |
+            dist/*.whl
+            dist/*.tar.gz 
